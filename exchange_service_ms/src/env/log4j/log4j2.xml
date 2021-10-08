@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+    <Properties>
+        <Property name="basePath">/var/log/microservices/exchange_service</Property>
+    </Properties>
+ 
+    <Appenders>
+     <!-- To Print logs in lof file -->
+        <RollingFile name="fileLogger" fileName="${basePath}/exchange_service.log" filePattern="${basePath}/exchange_service-%d{yyyy-MM-dd}.log">
+            <DefaultRolloverStrategy max="10"/>
+          <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %X{CorrelationId} %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <!-- File Max size param -->
+                 <SizeBasedTriggeringPolicy size="50MB"/>
+                 <!-- File MaxBackupIndex param. 10 logs will be backed up -->
+            </Policies>
+        </RollingFile>
+				 <!-- To Print logs in console -->
+       <!--  <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout   pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
+        </Console> -->
+    </Appenders>
+    <Loggers>
+        <Logger name="com.exchange.rates.service" level="DEBUG" additivity="true">
+            <appender-ref ref="fileLogger" level="DEBUG" />
+        </Logger>
+       
+        <!-- Dont change log level for below filter. It should always be DEBUG to print -->
+         <Logger name="org.springframework.web.filter.CommonsRequestLoggingFilter" level="DEBUG" additivity="true">
+            <appender-ref ref="fileLogger" level="DEBUG" />
+         </Logger>
+        <Root level="DEBUG" additivity="false">
+            <appender-ref ref="fileLogger" />
+        </Root>
+    </Loggers>
+</Configuration>
