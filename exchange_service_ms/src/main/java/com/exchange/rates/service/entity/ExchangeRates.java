@@ -18,8 +18,17 @@ public class ExchangeRates {
 	@Column( name = "BASE" , columnDefinition ="TEXT ",length=50)
 	private String base;
 
+	@Column( name = "SUCCESS" , columnDefinition = "boolean default false")
+	private Boolean success;
+	
+	@Column( name = "TIMESTAMP")
+	private long timestamp;
+	
+	@Column( name = "HISTORICAL" ,columnDefinition = "boolean default false")
+	private Boolean historical;
+
 	@Embedded
-    private Rates rates;
+     private Rates rates;
 	
 	public String getDate() {
 		return date;
@@ -46,11 +55,36 @@ public class ExchangeRates {
 		this.base = base;
 	}
 
-	@Override
-	public String toString() {
-		return "ExchangeRates [date=" + date + ", base=" + base + ", rates=" + rates + "]";
+	public Boolean getSuccess() {
+		return success;
 	}
 
-	
+	public void setSuccess(Boolean success) {
+		this.success = success;
+	}
+
+
+	public long getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(long timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	public Boolean getHistorical() {
+		return historical;
+	}
+
+	public void setHistorical(Boolean historical) {
+		this.historical = historical;
+	}
+
+	@Override
+	public String toString() {
+		return "ExchangeRates [date=" + date + ", base=" + base + ", success=" + success + ", timestamp=" + timestamp
+				+ ", historical=" + historical + ", rates=" + rates + "]";
+	}
+
 
 }
